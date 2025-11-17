@@ -1,23 +1,11 @@
 public class BudgetModel
 {
-	public int Id { get; set; }
-	public string Name { get; set; }
-	public decimal Limit { get; set; }
+    // Primary key
+    public int Id { get; set; }
 
-	public BudgetModel()
-	{
-		Id = 0;
-		Name = "Budget1";
-		Limit = 13500m;
-	}
+    // Name of the budget
+    public string Name { get; set; } = string.Empty;
 
-	public BudgetModel(int id, string name, decimal limit)
-	{
-		Id = id;
-		Name = name;
-		Limit = limit;
-	}
+    // Max amount for the budget
+    public decimal Limit { get; set; }
 }
-
-
-

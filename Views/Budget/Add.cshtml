@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Lägg till utgift";
+}
+
+<h1>Lägg till en utgift</h1>
+
+<form method="post" action="/Budget/Add">
+    <div>
+        <label>Belopp:</label>
+        <input type="number" name="Amount" step="0.01" required />
+    </div>
+
+    <div>
+        <label>Beskrivning:</label>
+        <input type="text" name="Description" required />
+    </div>
+
+    <button type="submit">Skicka</button>
+</form>

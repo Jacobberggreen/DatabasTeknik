@@ -16,6 +16,18 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /Users/jacobberggren/Desktop/DB Teknik/Databas
 build_property._RazorSourceGeneratorDebug = 
 
+[/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Budget/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnVkZ2V0L0FkZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Budget/AddResult.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnVkZ2V0L0FkZFJlc3VsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Budget/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnVkZ2V0L0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -30,6 +42,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Test/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVzdC9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/_ViewImports.cshtml]

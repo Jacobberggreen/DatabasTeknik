@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jacobberggren/Desktop/Umu/Databas/Databas.csproj": {}
+    "/Users/jacobberggren/Desktop/DB Teknik/Databas/Databas.csproj": {}
   },
   "projects": {
-    "/Users/jacobberggren/Desktop/Umu/Databas/Databas.csproj": {
+    "/Users/jacobberggren/Desktop/DB Teknik/Databas/Databas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jacobberggren/Desktop/Umu/Databas/Databas.csproj",
+        "projectUniqueName": "/Users/jacobberggren/Desktop/DB Teknik/Databas/Databas.csproj",
         "projectName": "Databas",
-        "projectPath": "/Users/jacobberggren/Desktop/Umu/Databas/Databas.csproj",
+        "projectPath": "/Users/jacobberggren/Desktop/DB Teknik/Databas/Databas.csproj",
         "packagesPath": "/Users/jacobberggren/.nuget/packages/",
-        "outputPath": "/Users/jacobberggren/Desktop/Umu/Databas/obj/",
+        "outputPath": "/Users/jacobberggren/Desktop/DB Teknik/Databas/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/jacobberggren/.nuget/NuGet/NuGet.Config"
