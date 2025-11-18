@@ -10,102 +10,6 @@
     bool hideSummary = ViewBag.HideSummary == true;
 }
 
-<form method="get" asp-action="Index" class="mb-3">
-    <div class="form-row">
-        <div class="col-auto">
-            <label for="sortOrder">Sortera</label>
-            <select id="sortOrder" name="sortOrder" class="form-control form-control-sm" onchange="this.form.submit()">
-                <option value="">Ingen sortering</option>
-
-                @if (currentSort == "cheapest")
-                {
-                    <option value="cheapest" selected>Billigast först</option>
-                }
-                else
-                {
-                    <option value="cheapest">Billigast först</option>
-                }
-
-                @if (currentSort == "expensive")
-                {
-                    <option value="expensive" selected>Dyrast först</option>
-                }
-                else
-                {
-                    <option value="expensive">Dyrast först</option>
-                }
-
-                @if (currentSort == "newest")
-                {
-                    <option value="newest" selected>Nyast tillagd</option>
-                }
-                else
-                {
-                    <option value="newest">Nyast tillagd</option>
-                }
-
-                @if (currentSort == "oldest")
-                {
-                    <option value="oldest" selected>Äldst tillagd</option>
-                }
-                else
-                {
-                    <option value="oldest">Äldst tillagd</option>
-                }
-            </select>
-        </div>
-
-        <div class="col-auto">
-            <label for="categoryFilter">Kategori</label>
-            <select id="categoryFilter" name="categoryFilter" class="form-control form-control-sm" onchange="this.form.submit()">
-                <option value="">Alla kategorier</option>
-
-                @if (currentCategory == 1)
-                {
-                    <option value="1" selected>Boende</option>
-                }
-                else
-                {
-                    <option value="1">Boende</option>
-                }
-
-                @if (currentCategory == 2)
-                {
-                    <option value="2" selected>Mat</option>
-                }
-                else
-                {
-                    <option value="2">Mat</option>
-                }
-
-                @if (currentCategory == 3)
-                {
-                    <option value="3" selected>Nöje</option>
-                }
-                else
-                {
-                    <option value="3">Nöje</option>
-                }
-            </select>
-        </div>
-
-        <div class="col-auto align-self-end">
-            <div class="form-check mt-4">
-                <input type="checkbox"
-                       class="form-check-input"
-                       id="hideSummary"
-                       name="hideSummary"
-                       value="true"
-                       @(hideSummary ? "checked=\"checked\"" : "")
-                       onchange="this.form.submit()" />
-                <label class="form-check-label" for="hideSummary">
-                    Dölj budgetinfo
-                </label>
-            </div>
-        </div>
-    </div>
-</form>
-
 @if (!hideSummary)
 {
     <h3>@ViewBag.BudgetName</h3>
@@ -114,13 +18,121 @@
         <strong>Total spent:</strong> @ViewBag.TotalAmount kr<br />
         <strong>Remaining:</strong> @ViewBag.Remaining kr
     </p>
-    <hr />
 }
 
+<form method="get" asp-action="Index" class="mb-3">
+    <input type="hidden" name="sortOrder" value="@currentSort" />
+    <input type="hidden" name="categoryFilter" value="@(currentCategory.HasValue ? currentCategory.ToString() : "")" />
+    <div class="form-check">
+        <input type="checkbox"
+               class="form-check-input"
+               id="hideSummary"
+               name="hideSummary"
+               value="true"
+               @(hideSummary ? "checked=\"checked\"" : "")
+               onchange="this.form.submit()" />
+        <label class="form-check-label" for="hideSummary">
+            Hide info
+        </label>
+    </div>
+</form>
+
+<hr />
+
 <p>
-    <a asp-action="Add" class="btn btn-primary">Add new expense</a>
-    <a asp-action="Manage" class="btn btn-secondary">Manage budget</a>
+    <a asp-action="Add"
+       class="btn btn-primary btn-sm"
+       style="width: 170px; display:inline-block; margin-right:8px;">
+        Add new expense
+    </a>
+
+    <a asp-action="Manage"
+       class="btn btn-secondary btn-sm"
+       style="width: 170px; display:inline-block;">
+        Manage budget
+    </a>
 </p>
+
+<form method="get" asp-action="Index" class="mb-3">
+    <select id="sortOrder"
+            name="sortOrder"
+            class="form-control form-control-sm"
+            style="width: 170px; display:inline-block; margin-right: 8px; text-align-last:center; text-align:center;"
+            onchange="this.form.submit()">
+        <option value="">No sorting</option>
+
+        @if (currentSort == "cheapest")
+        {
+            <option value="cheapest" selected>Price Low-High</option>
+        }
+        else
+        {
+            <option value="cheapest">Price Low-High</option>
+        }
+
+        @if (currentSort == "expensive")
+        {
+            <option value="expensive" selected>Price High-Low</option>
+        }
+        else
+        {
+            <option value="expensive">Price High-Low</option>
+        }
+
+        @if (currentSort == "newest")
+        {
+            <option value="newest" selected>Newest</option>
+        }
+        else
+        {
+            <option value="newest">Newest</option>
+        }
+
+        @if (currentSort == "oldest")
+        {
+            <option value="oldest" selected>Oldest</option>
+        }
+        else
+        {
+            <option value="oldest">Oldest</option>
+        }
+    </select>
+
+    <select id="categoryFilter"
+            name="categoryFilter"
+            class="form-control form-control-sm"
+            style="width: 170px; display:inline-block; text-align-last:center; text-align:center;"
+            onchange="this.form.submit()">
+        <option value="">All Categories</option>
+
+        @if (currentCategory == 1)
+        {
+            <option value="1" selected>Home</option>
+        }
+        else
+        {
+            <option value="1">Home</option>
+        }
+
+        @if (currentCategory == 2)
+        {
+            <option value="2" selected>Food</option>
+        }
+        else
+        {
+            <option value="2">Food</option>
+        }
+
+        @if (currentCategory == 3)
+        {
+            <option value="3" selected>Pleasure</option>
+        }
+        else
+        {
+            <option value="3">Pleasure</option>
+        }
+    </select>
+</form>
 
 @if (ViewBag.LastAmount != null)
 {
