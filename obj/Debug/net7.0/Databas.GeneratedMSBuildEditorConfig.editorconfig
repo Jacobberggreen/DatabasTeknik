@@ -20,12 +20,12 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnVkZ2V0L0FkZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Budget/AddResult.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnVkZ2V0L0FkZFJlc3VsdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Budget/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnVkZ2V0L0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Budget/Manage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnVkZ2V0L01hbmFnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/jacobberggren/Desktop/DB Teknik/Databas/Views/Home/Index.cshtml]

@@ -1,0 +1,71 @@
+@model Databas.Models.BudgetManageViewModel
+
+@{
+    ViewData["Title"] = "Manage budget";
+
+    // Simple calculation for remaining amount
+    var remaining = Model.Budget.Limit - Model.TotalAmount;
+}
+
+<h1>Manage budget</h1>
+
+<h3>@Model.Budget.Name</h3>
+
+<form asp-action="UpdateBudget" method="post">
+    <div class="form-group">
+        <label>Budget Name</label>
+        <input asp-for="Budget.Name" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Budget Limit</label>
+        <input asp-for="Budget.Limit" class="form-control" />
+    </div>
+
+    <p>
+        <strong>Total spent:</strong> @Model.TotalAmount kr<br />
+        <strong>Remaining:</strong> @remaining kr
+    </p>
+
+    <button type="submit" class="btn btn-primary">Save changes</button>
+</form>
+
+<hr />
+
+<h4>Expenses</h4>
+
+@if (Model.Expenses.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+				<th>Amount</th>
+				<th>Description</th>
+				<th>Actions</th>
+			</tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Expenses)
+        {
+            <tr>
+				<td>@item.Amount kr</td>
+				<td>@item.Description</td>
+				<td>
+					<form asp-action="Delete" method="post" style="display:inline;">
+						<input type="hidden" name="id" value="@item.Id" />
+						<button type="submit" class="btn btn-danger btn-sm">Delete</button>
+					</form>
+				</td>
+			</tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No expenses yet.</p>
+}
+
+<p>
+    <a asp-action="Index" class="btn btn-secondary">Back to overview</a>
+</p>

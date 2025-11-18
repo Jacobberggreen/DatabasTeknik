@@ -4,15 +4,134 @@
     ViewData["Title"] = "Budgetöversikt";
 }
 
-<h1>Budgetöversikt</h1>
+@{
+    string currentSort = ViewBag.CurrentSort as string;
+    int? currentCategory = ViewBag.CurrentCategoryFilter as int?;
+    bool hideSummary = ViewBag.HideSummary == true;
+}
+
+<form method="get" asp-action="Index" class="mb-3">
+    <div class="form-row">
+        <div class="col-auto">
+            <label for="sortOrder">Sortera</label>
+            <select id="sortOrder" name="sortOrder" class="form-control form-control-sm" onchange="this.form.submit()">
+                <option value="">Ingen sortering</option>
+
+                @if (currentSort == "cheapest")
+                {
+                    <option value="cheapest" selected>Billigast först</option>
+                }
+                else
+                {
+                    <option value="cheapest">Billigast först</option>
+                }
+
+                @if (currentSort == "expensive")
+                {
+                    <option value="expensive" selected>Dyrast först</option>
+                }
+                else
+                {
+                    <option value="expensive">Dyrast först</option>
+                }
+
+                @if (currentSort == "newest")
+                {
+                    <option value="newest" selected>Nyast tillagd</option>
+                }
+                else
+                {
+                    <option value="newest">Nyast tillagd</option>
+                }
+
+                @if (currentSort == "oldest")
+                {
+                    <option value="oldest" selected>Äldst tillagd</option>
+                }
+                else
+                {
+                    <option value="oldest">Äldst tillagd</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-auto">
+            <label for="categoryFilter">Kategori</label>
+            <select id="categoryFilter" name="categoryFilter" class="form-control form-control-sm" onchange="this.form.submit()">
+                <option value="">Alla kategorier</option>
+
+                @if (currentCategory == 1)
+                {
+                    <option value="1" selected>Boende</option>
+                }
+                else
+                {
+                    <option value="1">Boende</option>
+                }
+
+                @if (currentCategory == 2)
+                {
+                    <option value="2" selected>Mat</option>
+                }
+                else
+                {
+                    <option value="2">Mat</option>
+                }
+
+                @if (currentCategory == 3)
+                {
+                    <option value="3" selected>Nöje</option>
+                }
+                else
+                {
+                    <option value="3">Nöje</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-auto align-self-end">
+            <div class="form-check mt-4">
+                <input type="checkbox"
+                       class="form-check-input"
+                       id="hideSummary"
+                       name="hideSummary"
+                       value="true"
+                       @(hideSummary ? "checked=\"checked\"" : "")
+                       onchange="this.form.submit()" />
+                <label class="form-check-label" for="hideSummary">
+                    Dölj budgetinfo
+                </label>
+            </div>
+        </div>
+    </div>
+</form>
+
+@if (!hideSummary)
+{
+    <h3>@ViewBag.BudgetName</h3>
+    <p>
+        <strong>Limit:</strong> @ViewBag.BudgetLimit kr<br />
+        <strong>Total spent:</strong> @ViewBag.TotalAmount kr<br />
+        <strong>Remaining:</strong> @ViewBag.Remaining kr
+    </p>
+    <hr />
+}
+
+<p>
+    <a asp-action="Add" class="btn btn-primary">Add new expense</a>
+    <a asp-action="Manage" class="btn btn-secondary">Manage budget</a>
+</p>
+
+@if (ViewBag.LastAmount != null)
+{
+    <p>
+        Senaste tillagd: @ViewBag.LastDescription - @ViewBag.LastAmount kr<br />
+    </p>
+}
 
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>UserId</th>
-            <th>BudgetId</th>
-            <th>CategoryId</th>
             <th>Amount</th>
             <th>Description</th>
         </tr>
@@ -22,10 +141,6 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.Id</td>
-            <td>@item.UserId</td>
-            <td>@item.BudgetId</td>
-            <td>@item.CategoryId</td>
             <td>@item.Amount</td>
             <td>@item.Description</td>
         </tr>

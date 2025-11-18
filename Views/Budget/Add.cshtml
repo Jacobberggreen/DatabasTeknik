@@ -1,19 +1,42 @@
+@model Databas.Models.ExpenseModel
+
 @{
-    ViewData["Title"] = "Lägg till utgift";
+    ViewData["Title"] = "Add expense";
 }
 
-<h1>Lägg till en utgift</h1>
+<h1>Add expense</h1>
 
-<form method="post" action="/Budget/Add">
-    <div>
-        <label>Belopp:</label>
-        <input type="number" name="Amount" step="0.01" required />
+<form asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="Amount"></label>
+        <input asp-for="Amount" type="number" step="0.01" class="form-control" required />
+        <span asp-validation-for="Amount" class="text-danger"></span>
     </div>
 
-    <div>
-        <label>Beskrivning:</label>
-        <input type="text" name="Description" required />
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" type="text" class="form-control" required />
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
-    <button type="submit">Skicka</button>
+    <div class="form-group">
+        <label>Kategori</label><br />
+        <label>
+            <input type="radio" asp-for="CategoryId" value="1" /> Boende
+        </label>
+        <label style="margin-left: 10px;">
+            <input type="radio" asp-for="CategoryId" value="2" /> Mat
+        </label>
+        <label style="margin-left: 10px;">
+            <input type="radio" asp-for="CategoryId" value="3" /> Nöje
+        </label>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back to list</a>
 </form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
