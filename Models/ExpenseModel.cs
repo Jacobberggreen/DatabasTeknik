@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Databas.Models
-{
-    public class ExpenseModel
-    {
+namespace Databas.Models {
+
+	// Model representing an expense with validation attributes
+    public class ExpenseModel {
         public int Id { get; set; }
         public int UserId { get; set; }
         public int BudgetId { get; set; }

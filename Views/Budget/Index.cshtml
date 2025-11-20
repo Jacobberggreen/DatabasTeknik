@@ -1,17 +1,19 @@
 @model List<Databas.Models.ExpenseModel>
 
+// View for displaying the budget overview
 @{
     ViewData["Title"] = "Budgetöversikt";
 }
 
+// Retrieve current sorting, filtering, and summary visibility from ViewBag
 @{
     string currentSort = ViewBag.CurrentSort as string;
     int? currentCategory = ViewBag.CurrentCategoryFilter as int?;
     bool hideSummary = ViewBag.HideSummary == true;
 }
 
-@if (!hideSummary)
-{
+// Display budget summary unless hidden
+@if (!hideSummary) {
     <h3>@ViewBag.BudgetName</h3>
     <p>
         <strong>Limit:</strong> @ViewBag.BudgetLimit kr<br />
@@ -20,6 +22,7 @@
     </p>
 }
 
+// Form for toggling the visibility of the budget summary
 <form method="get" asp-action="Index" class="mb-3">
     <input type="hidden" name="sortOrder" value="@currentSort" />
     <input type="hidden" name="categoryFilter" value="@(currentCategory.HasValue ? currentCategory.ToString() : "")" />
@@ -39,6 +42,7 @@
 
 <hr />
 
+// Buttons for adding expenses and managing budget
 <p>
     <a asp-action="Add"
        class="btn btn-primary btn-sm"
@@ -53,6 +57,7 @@
     </a>
 </p>
 
+// Form for sorting and filtering expenses
 <form method="get" asp-action="Index" class="mb-3">
     <select id="sortOrder"
             name="sortOrder"
@@ -61,39 +66,31 @@
             onchange="this.form.submit()">
         <option value="">No sorting</option>
 
-        @if (currentSort == "cheapest")
-        {
+        @if (currentSort == "cheapest") {
             <option value="cheapest" selected>Price Low-High</option>
         }
-        else
-        {
+        else {
             <option value="cheapest">Price Low-High</option>
         }
 
-        @if (currentSort == "expensive")
-        {
+        @if (currentSort == "expensive") {
             <option value="expensive" selected>Price High-Low</option>
         }
-        else
-        {
+        else {
             <option value="expensive">Price High-Low</option>
         }
 
-        @if (currentSort == "newest")
-        {
+        @if (currentSort == "newest") {
             <option value="newest" selected>Newest</option>
         }
-        else
-        {
+        else {
             <option value="newest">Newest</option>
         }
 
-        @if (currentSort == "oldest")
-        {
+        @if (currentSort == "oldest") {
             <option value="oldest" selected>Oldest</option>
         }
-        else
-        {
+        else {
             <option value="oldest">Oldest</option>
         }
     </select>
@@ -105,42 +102,37 @@
             onchange="this.form.submit()">
         <option value="">All Categories</option>
 
-        @if (currentCategory == 1)
-        {
+        @if (currentCategory == 1) {
             <option value="1" selected>Home</option>
         }
-        else
-        {
+        else {
             <option value="1">Home</option>
         }
 
-        @if (currentCategory == 2)
-        {
+        @if (currentCategory == 2) {
             <option value="2" selected>Food</option>
         }
-        else
-        {
+        else {
             <option value="2">Food</option>
         }
 
-        @if (currentCategory == 3)
-        {
+        @if (currentCategory == 3)  {
             <option value="3" selected>Pleasure</option>
         }
-        else
-        {
+        else {
             <option value="3">Pleasure</option>
         }
     </select>
 </form>
 
-@if (ViewBag.LastAmount != null)
-{
+// Display last added expense if available
+@if (ViewBag.LastAmount != null) {
     <p>
         Senaste tillagd: @ViewBag.LastDescription - @ViewBag.LastAmount kr<br />
     </p>
 }
 
+// Expense list table
 <table class="table">
     <thead>
         <tr>
@@ -150,8 +142,7 @@
     </thead>
 
     <tbody>
-    @foreach (var item in Model)
-    {
+    @foreach (var item in Model) {
         <tr>
             <td>@item.Amount</td>
             <td>@item.Description</td>
