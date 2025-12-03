@@ -1,0 +1,49 @@
+@model List<Databas.Models.CategoryModel>
+
+@{
+    ViewData["Title"] = "Manage Categories";
+}
+
+<h1>Manage Categories</h1>
+
+<h4>Add new category</h4>
+<form asp-action="Create" method="post" class="mb-4">
+    <div class="input-group" style="max-width: 400px;">
+        <input type="text" name="name" class="form-control" placeholder="Category name" />
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+</form>
+
+<h4>Existing categories</h4>
+@if (!Model.Any())
+{
+    <p>No categories defined yet.</p>
+}
+else
+{
+    <table class="table table-striped" style="max-width: 600px;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th style="width: 120px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var cat in Model)
+        {
+            <tr>
+                <td>@cat.Cat_Name</td>
+                <td>
+                    <form asp-controller="Category" asp-action="Delete" method="get" asp-route-id="@cat.Cat_Id" onsubmit="return confirm('Delete this category?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<a asp-controller="Expense" asp-action="Index" class="btn btn-secondary">
+    Back
+</a>

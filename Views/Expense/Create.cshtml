@@ -1,0 +1,50 @@
+@model Databas.Models.ExpenseModel
+
+@{
+    ViewData["Title"] = "Add Expense";
+    var categories = ViewBag.Categories as List<Databas.Models.CategoryModel> 
+                     ?? new List<Databas.Models.CategoryModel>();
+}
+
+<h1>Add Expense</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group mb-3">
+		<label class="form-label">Amount</label>
+		<input asp-for="Exp_Amount" class="form-control" type="number" step="0.01" />
+		<span asp-validation-for="Exp_Amount" class="text-danger"></span>
+	</div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">Date</label>
+        <input asp-for="Exp_Date" type="date" class="form-control" />
+        <span asp-validation-for="Exp_Date" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">Description</label>
+        <input asp-for="Exp_Desc" type="text" class="form-control" />
+        <span asp-validation-for="Exp_Desc" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">Category</label>
+        <select asp-for="Exp_FK_Cat" class="form-control">
+            <option value="">-- Select category --</option>
+            @foreach (var cat in categories)
+            {
+                <option value="@cat.Cat_Id">@cat.Cat_Name</option>
+            }
+        </select>
+        <span asp-validation-for="Exp_FK_Cat" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,31 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jacobberggren/Desktop/DB Teknik/Databas/Databas.csproj": {}
+    "/Users/jacobberggren/Desktop/DB Teknik/Databas L3/Databas.csproj": {}
   },
   "projects": {
-    "/Users/jacobberggren/Desktop/DB Teknik/Databas/Databas.csproj": {
+    "/Users/jacobberggren/Desktop/DB Teknik/Databas L3/Databas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jacobberggren/Desktop/DB Teknik/Databas/Databas.csproj",
+        "projectUniqueName": "/Users/jacobberggren/Desktop/DB Teknik/Databas L3/Databas.csproj",
         "projectName": "Databas",
-        "projectPath": "/Users/jacobberggren/Desktop/DB Teknik/Databas/Databas.csproj",
+        "projectPath": "/Users/jacobberggren/Desktop/DB Teknik/Databas L3/Databas.csproj",
         "packagesPath": "/Users/jacobberggren/.nuget/packages/",
-        "outputPath": "/Users/jacobberggren/Desktop/DB Teknik/Databas/obj/",
+        "outputPath": "/Users/jacobberggren/Desktop/DB Teknik/Databas L3/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/jacobberggren/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net6.0"
         ],
         "sources": {
           "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -36,8 +36,14 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -57,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.403/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,0 +1,198 @@
+@model List<Databas.Models.ExpenseModel>
+@using Databas.Models
+@using System.Linq
+@using System.Text.Json
+
+@{
+    var categoryTotals = ViewBag.CategoryTotals as List<CategoryTotalModel> ?? new List<CategoryTotalModel>();
+    var hasChartData = categoryTotals.Any();
+    var sortedTotals = categoryTotals.OrderByDescending(c => c.TotalAmount).ToList();
+	var chartLabels = sortedTotals.Select(c => c.CategoryName).ToList();
+	var chartData = sortedTotals.Select(c => c.TotalAmount).ToList();
+}
+
+@{
+    ViewData["Title"] = "Utgifter";
+
+    string currentSort = ViewBag.CurrentSort as string;
+    int? currentCategory = ViewBag.CurrentCategory as int?;
+    string currentSearch = ViewBag.CurrentSearch as string ?? string.Empty;
+    var categories = ViewBag.Categories as List<Databas.Models.CategoryModel> ?? new List<Databas.Models.CategoryModel>();
+    
+	decimal totalAmount = Model != null && Model.Count > 0
+    ? Model.Sum(e => e.Exp_Amount)
+    : 0m;
+}
+
+<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:20px;">
+    <div style="flex:1;">
+        <h2 class="mb-3">Budget</h2>
+
+        <p>
+            <a asp-action="Create" class="btn btn-primary btn-sm" style="width: 170px; margin-right:8px;">
+                Add Expense
+            </a>
+        </p>
+
+		<div class="mb-3">
+			<a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary btn-sm" style="width: 170px; margin-right:8px;">
+				Manage Categories
+			</a>
+		</div>
+
+        <form method="get" asp-action="Index" class="mb-3">
+            <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+                <input type="text"
+                       name="searchText"
+                       value="@currentSearch"
+                       class="form-control form-control-sm"
+                       style="width: 200px;"
+                       placeholder="Search expense..." />
+
+                <select id="categoryId"
+                        name="categoryId"
+                        class="form-control form-control-sm"
+                        style="width: 170px; text-align-last:center; text-align:center;">
+                    <option value="">All Categories</option>
+                    @foreach (var cat in categories)
+                    {
+                        if (currentCategory.HasValue && currentCategory.Value == cat.Cat_Id)
+                        {
+                            <option value="@cat.Cat_Id" selected>@cat.Cat_Name</option>
+                        }
+                        else
+                        {
+                            <option value="@cat.Cat_Id">@cat.Cat_Name</option>
+                        }
+                    }
+                </select>
+
+                <select id="sortOrder"
+                        name="sortOrder"
+                        class="form-control form-control-sm"
+                        style="width: 170px; text-align-last:center; text-align:center;">
+                    <option value="">Date – Newest First</option>
+
+                    @if (currentSort == "date_asc")
+                    {
+                        <option value="date_asc" selected>Date – Oldest First</option>
+                    }
+                    else
+                    {
+                        <option value="date_asc">Date – Oldest First</option>
+                    }
+
+                    @if (currentSort == "amount_asc")
+                    {
+                        <option value="amount_asc" selected>Amount – Low to High</option>
+                    }
+                    else
+                    {
+                        <option value="amount_asc">Amount – Low to High</option>
+                    }
+
+                    @if (currentSort == "amount_desc")
+                    {
+                        <option value="amount_desc" selected>Amount – High to Low</option>
+                    }
+                    else
+                    {
+                        <option value="amount_desc">Amount – High to Low</option>
+                    }
+                </select>
+
+                <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+            </div>
+        </form>
+
+        <p>
+            <strong>Total amount:</strong> @totalAmount kr
+        </p>
+
+    </div>
+
+    <div>
+        @if (hasChartData) {
+            <div style="width:100%; margin-bottom:20px;">
+                <canvas id="expenseChart"></canvas>
+            </div>
+        }
+        else {
+            <p>No expenses available to display in chart.</p>
+        }
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model != null && Model.Count > 0)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Exp_Date.ToString("yyyy-MM-dd")</td>
+                <td>@item.CategoryName</td>
+                <td>@item.Exp_Amount kr</td>
+                <td>@item.Exp_Desc</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Exp_Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@item.Exp_Id" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this expense?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="5">No expenses to display.</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const chartCanvas = document.getElementById('expenseChart');
+
+        if (chartCanvas) {
+            const ctx = chartCanvas.getContext('2d');
+
+            const labels = @Html.Raw(JsonSerializer.Serialize(chartLabels));
+            const data = @Html.Raw(JsonSerializer.Serialize(chartData));
+
+            const chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total amount per category',
+                        data: data,
+                    }]
+                },
+                options: {
+					responsive: true,
+					interaction: {
+						mode: 'nearest',
+						cutout: '45%',
+						intersect: false
+					},
+					plugins: {
+						legend: { position: 'bottom' }
+					}
+				}
+            });
+        }
+    </script>
+}

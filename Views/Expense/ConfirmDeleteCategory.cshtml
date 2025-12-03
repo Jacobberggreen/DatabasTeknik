@@ -1,0 +1,43 @@
+@model Databas.Models.CategoryDeleteViewModel
+
+@{
+    ViewData["Title"] = "Delete category";
+}
+
+<h2>Delete category "@Model.CategoryName"</h2>
+
+<p>
+    There are <strong>@Model.ExpenseCount</strong> expenses connected to this category.
+</p>
+
+<p>What do you want to do?</p>
+
+<form asp-controller="Category" asp-action="ConfirmDeleteCategory" method="post">
+    <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+
+    <div class="mb-3">
+        <div>
+            <input type="radio" id="move" name="actionType" value="move" checked />
+            <label for="move">Move all expenses to another category</label>
+        </div>
+        <div class="mt-2" style="margin-left: 24px;">
+            <label for="newCategoryId">Target category:</label>
+            <select id="newCategoryId" name="newCategoryId" class="form-control">
+                @foreach (var cat in Model.AvailableCategories)
+                {
+                    <option value="@cat.Cat_Id">@cat.Cat_Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div>
+            <input type="radio" id="delete" name="actionType" value="delete" />
+            <label for="delete">Delete all expenses in this category and remove the category</label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-danger">Confirm</button>
+    <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
